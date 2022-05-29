@@ -1,0 +1,98 @@
+.index {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  h1 {
+    font-size: 25px;
+    color: rgb(41, 71, 86);
+    font-weight: 300;
+    margin-top: 48px;
+    margin-bottom: 48px;
+  }
+
+  .content {
+    width: 100%;
+
+    #longUrl {
+      font-size: 22px;
+      height: 72px;
+      width: 80%;
+      padding: 0px 48px 0px 32px;
+      border-radius: 100px;
+      border: 1px solid #42a5f5;
+      margin-bottom: 28px;
+
+      &:focus-visible {
+        outline: none;
+      }
+    }
+
+    &>button {
+      height: 72px;
+      padding: 0 40px;
+      font-size: 16px;
+      color: white;
+      background: linear-gradient(to right, rgb(66, 165, 245), rgb(41, 121, 255));
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+    }
+
+    .link {
+      margin-bottom: 50px;
+      font-size: 24px;
+      color: rgb(41, 71, 86);
+      font-weight: 300;
+
+      button {
+        width: 30px;
+        height: 30px;
+        padding: 6px;
+        background-color: rgb(235, 255, 243);
+        border: none;
+        outline: none;
+        border-radius: 100%;
+        cursor: pointer;
+      }
+
+      .icon-fuzhi:before{
+        color:aqua;
+        font-weight: 600;
+      }
+    }
+    .table{
+      padding: 40px;
+      background: #e0f2fe;
+      thead{
+        td{
+          font-weight: 600;
+          padding: 8px 16px;
+          font-size: 20px;
+          color: #42a5f0;
+          text-align: center;
+        }
+      }
+      tbody{
+        td{
+          font-weight: 500;
+          padding: 8px 16px;
+          font-size: 18px;
+          color: #42a5f0;
+          border-top: 1px solid #42a5f5;
+          border-left: 1px solid #42a5f5;
+        }
+        tr{
+          td:last-child{
+            border-right: 1px solid #42a5f5;
+          }
+          &:last-child{
+            td{
+              border-bottom: 1px solid #42a5f5;
+            }
+          }
+        }
+      }
+    }
+  }
+}

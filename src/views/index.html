@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link href="/stylesheet/index.css" rel="stylesheet" type="text/css" />
+  <link rel="stylesheet" href="//at.alicdn.com/t/font_3426033_ttxrfhzhaca.css"/>
+</head>
+
+<body>
+  <div class="index">
+    <h1>short-link.</h1>
+    <div class="content">
+      <input type="text" placeholder="请输入长链接" id="longUrl">
+      <button onclick="submit()">确定</button>
+      <div class="link">
+        <span>短链接:</span>
+        <a id="shortUrl"></a>
+        <button onclick="copyUrl()" style="display:none ;" id="copy-url">
+          <i class="iconfont icon-fuzhi"></i>
+        </button>
+      </div>
+      <div class="table">
+        <table cellspacing="0">
+          <thead>
+            <td>序号</td>
+            <td>长接接</td>
+            <td>短链接</td>
+            <td>状态</td>
+            <td>操作</td>
+          </thead>
+          <tbody id="table-body">
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+  <script>
+    async function changeStaus(shortKey,isDelete){
+      const { data } = await fetch('/links', {
+        method: 'put',
+        body: JSON.stringify({
+          shortKey,isDelete
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => res.json())
+      getUrls()
+    }
+
+    async function getUrls() {
+      const { data } = await fetch('/getUrls', {
+        method: 'get',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => res.json())
+      let contanier = document.querySelector("#table-body")
+      contanier.innerHTML = ''
+      const element = document.createDocumentFragment()
+      function createTd(val){
+        const td=document.createElement('td')
+        td.innerText=val
+        return td
+      }
+      function createdIcon(className,fn){
+        const resetIcon=document.createElement('i')
+        resetIcon.setAttribute('class',`iconfont ${className}`)
+        resetIcon.setAttribute('style', 'cursor: pointer;')
+        resetIcon.addEventListener('click',fn)
+        return resetIcon
+      }
+      data.forEach((e,i) => {
+        const {longUrl,shortUrl,shortKey,isDelete}=e
+        const tr=document.createElement('tr')
+        tr.appendChild(createTd(i+1))
+        tr.appendChild(createTd(longUrl))
+        const td=document.createElement('td')
+        const a=document.createElement('a')
+        a.setAttribute('href',shortUrl)
+        a.innerText=shortUrl
+        td.appendChild(a)
+        tr.appendChild(td)
+        tr.appendChild(createTd(isDelete?'禁用':'启用'))
+        const resetTd=document.createElement('td')
+        resetTd.appendChild(createdIcon('icon-huifu',()=>{changeStaus(shortKey,isDelete?0:1)}))
+        const delTd=document.createElement('td')
+        delTd.appendChild(createdIcon('icon-shanchu',()=>{changeStaus(shortKey,isDelete?0:1)}))
+        isDelete?tr.appendChild(resetTd):tr.appendChild(delTd)
+        element.appendChild(tr)
+      });
+      contanier.appendChild(element)
+    }
+    getUrls()
+
+    async function submit(event) {
+      const url = document.querySelector("#longUrl").value
+      const {
+        data,
+        code
+      } = await fetch('/link', {
+        method: 'post',
+        body: JSON.stringify({
+          url
+        }),
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      }).then((res) => res.json())
+      if(code!==200){
+        return
+      }
+      const a = document.querySelector("#shortUrl")
+      a.setAttribute('href', data.shortUrl)
+      a.innerText = data.shortUrl
+      document.querySelector("#copy-url").setAttribute('style', 'display: inline-block;')
+    }
+
+    function copyUrl() {
+      const a = document.querySelector("#shortUrl")
+      const i = document.createElement("input")
+      i.value = a.innerText
+      document.body.appendChild(i);
+      i.select();
+      document.execCommand("Copy");
+      document.body.removeChild(i)
+    }
+  </script>
+</body>
+
+</html>
