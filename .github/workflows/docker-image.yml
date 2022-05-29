@@ -26,6 +26,6 @@ jobs:
     - name: push docker hub
       run: |
         echo 当前仓库名为：$GITHUB_REPOSITORY
-        echo 当前操作者为：$GITHUB_ACTION_REPOSITORY
+        echo 当前操作者为：happydang$($GITHUB_REPOSITORY.split('/')[1])
         echo 当前tag为：${{steps.docker-build.outputs.tag}}
         docker push happydang/my-image-name:${{steps.docker-build.outputs.tag}}
