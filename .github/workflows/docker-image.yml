@@ -11,6 +11,8 @@ jobs:
   build:
 
     runs-on: ubuntu-latest
+    env:
+      Docker_Image_Name: happydang/short-link
 
     steps:
     - uses: actions/checkout@v3
@@ -28,5 +30,3 @@ jobs:
         echo 当前仓库名为：$GITHUB_REPOSITORY
         echo 当前dockerImage名为：$Docker_Image_Name
         docker push $Docker_Image_Name:${{steps.docker-build.outputs.tag}}
-      env:
-        Docker_Image_Name: happydang/short-link
