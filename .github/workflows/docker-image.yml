@@ -22,6 +22,7 @@ jobs:
         tag=$(date +%s)
         docker build . --file Dockerfile --tag $Docker_Image_Name:${tag}
         echo "::set-output name=tag::${tag}"
+        echo ---当前dockerImage名为：$Tese_Name
 
     - name: login docker hub
       run: docker login -u happydang -p happydang1215
