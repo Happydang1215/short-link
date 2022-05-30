@@ -18,14 +18,15 @@ jobs:
       id: docker-build
       run: |
         tag=$(date +%s)
-        docker build . --file Dockerfile --tag happydang/my-image-name:${tag}
+        docker build . --file Dockerfile --tag $Docker_Image_Name:${tag}
         echo "::set-output name=tag::${tag}"
 
     - name: login docker hub
       run: docker login -u happydang -p happydang1215
     - name: push docker hub
       run: |
-        echo 当前仓库名为：$GITHUB_REPOSITORY.split('/')
-        echo 当前操作者为：${{GITHUB_REPOSITORY}}
-        echo 当前tag为：${{steps.docker-build.outputs.tag}}
-        docker push happydang/my-image-name:${{steps.docker-build.outputs.tag}}
+        echo 当前仓库名为：$GITHUB_REPOSITORY
+        echo 当前dockerImage名为：$Docker_Image_Name
+        docker push $Docker_Image_Name:${{steps.docker-build.outputs.tag}}
+      env:
+        Docker_Image_Name: happydang/short-link
