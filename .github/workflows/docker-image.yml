@@ -28,7 +28,7 @@ jobs:
     - name: push docker hub
       run: |
         echo 当前仓库名为：$GITHUB_REPOSITORY
-        echo 当前dockerImage名为：$Tese-Name
+        echo 当前dockerImage名为：$Tese_Name
         docker push $Docker_Image_Name:${{steps.docker-build.outputs.tag}}
       env:
-        Tese-Name: testName
+        Tese_Name: testName
