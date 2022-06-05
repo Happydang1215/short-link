@@ -13,24 +13,22 @@ jobs:
     runs-on: ubuntu-latest
     env:
       Docker_Image_Name: happydang/short-link
-      DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
 
     steps:
-    # - uses: actions/checkout@v3
-    # - name: Build the Docker image
-    #   id: docker-build
-    #   run: |
-    #     tag=$(date +%s)
-    #     docker build . --file Dockerfile --tag $Docker_Image_Name:${tag}
-    #     echo "::set-output name=tag::${tag}"
+    - uses: actions/checkout@v3
+    - name: Build the Docker image
+      id: docker-build
+      run: |
+        tag=$(date +%s)
+        docker build . --file Dockerfile --tag $Docker_Image_Name:${tag}
+        echo "::set-output name=tag::${tag}"
 
-    # - name: login docker hub
-    #   run: docker login -u happydang -p happydang1215
-    # - name: push docker hub
-    #   run: |
-    #     echo 当前仓库名为：$GITHUB_REPOSITORY
-    #     echo 这是key：$DEPLOY_KEY
-    #     docker push $Docker_Image_Name:${{steps.docker-build.outputs.tag}}
+    - name: login docker hub
+      run: docker login -u happydang -p happydang1215
+    - name: push docker hub
+      run: |
+        echo 当前仓库名为：$GITHUB_REPOSITORY
+        docker push $Docker_Image_Name:${{steps.docker-build.outputs.tag}}
 
     - name: deploy
       uses: appleboy/ssh-action@master
@@ -39,4 +37,6 @@ jobs:
         key: ${{ secrets.DEPLOY_KEY }}
         username: "ubuntu"
         script: |
-          pwd
+          export TAG=${{steps.docker-build.outputs.tag}}
+          echo 这是tag：${{steps.docker-build.outputs.tag}}
+          sudo docker-compose up -d
