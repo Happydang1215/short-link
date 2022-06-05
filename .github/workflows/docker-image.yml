@@ -37,4 +37,5 @@ jobs:
         key: ${{ secrets.DEPLOY_KEY }}
         username: "ubuntu"
         script: |
-          export TAG=${{steps.docker-build.outputs.tag}} && sudo docker-compose up -d
+          export TAG=${{steps.docker-build.outputs.tag}}
+          sudo -E docker-compose up -d
