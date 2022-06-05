@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       Docker_Image_Name: happydang/short-link
+      SUPER_SECRET: ${{ secrets.DEPLOY_KEY }}
 
     steps:
     - uses: actions/checkout@v3
@@ -28,14 +29,14 @@ jobs:
     - name: push docker hub
       run: |
         echo 当前仓库名为：$GITHUB_REPOSITORY
-        echo 这是key：${{ secrets.DEPLOY_KEY }}
+        echo 这是key：$SUPER_SECRET
         docker push $Docker_Image_Name:${{steps.docker-build.outputs.tag}}
 
     - name: deploy
       uses: appleboy/ssh-action@master
       with:
         host: "101.42.163.104"
-        key: ${{ secrets.DEPLOY_KEY }}
+        key: $SUPER_SECRET
         username: "ubuntu"
         script: |
           pwd
