@@ -36,7 +36,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: "101.42.163.104"
-        key: ""
+        key: $DEPLOY_KEY
         username: "ubuntu"
         script: |
           pwd
