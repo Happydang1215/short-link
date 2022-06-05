@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: 打包部署
 
 on:
   push:
@@ -22,18 +22,22 @@ jobs:
         tag=$(date +%s)
         docker build . --file Dockerfile --tag $Docker_Image_Name:${tag}
         echo "::set-output name=tag::${tag}"
-        echo ---当前dockerImage名为：$Tese_Name
 
     - name: login docker hub
       run: docker login -u happydang -p happydang1215
     - name: push docker hub
       run: |
         echo 当前仓库名为：$GITHUB_REPOSITORY
-        echo 当前dockerImage名为：$Tese_Name
         docker push $Docker_Image_Name:${{steps.docker-build.outputs.tag}}
-      env:
-        Tese_Name: testName
 
+    - name: deploy
+      uses: appleboy/ssh-action@master
+      with:
+        host: "101.42.163.104"
+        key: ""
+        username: "ubuntu"
+        script: |
+          pwd
 
 
 
