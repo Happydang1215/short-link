@@ -28,7 +28,7 @@ jobs:
     - name: push docker hub
       run: |
         echo 当前仓库名为：$GITHUB_REPOSITORY
-        echo ${{ secrets.DEPLOY_KEY }}
+        echo 这是key：${{ secrets.DEPLOY_KEY }}
         docker push $Docker_Image_Name:${{steps.docker-build.outputs.tag}}
 
     - name: deploy
