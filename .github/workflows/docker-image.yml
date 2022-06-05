@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       Docker_Image_Name: happydang/short-link
-      SUPER_SECRET: ${{ secrets.DEPLOY_KEY }}
+      SUPER_SECRET: ${{ secrets }}
 
     steps:
     - uses: actions/checkout@v3
