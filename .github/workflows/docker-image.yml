@@ -36,8 +36,7 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: "101.42.163.104"
-        key: "
------BEGIN OPENSSH PRIVATE KEY-----
+        key: "-----BEGIN OPENSSH PRIVATE KEY-----
 b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAABlwAAAAdzc2gtcn
 NhAAAAAwEAAQAAAYEAsaX55BvPA2CtbtsIT+4VDU0/Rr5euf8DdXt0ZJsMjDnsXC6N2R8L
 E/lLxH2MIRJuVKqTawByERXon35eXonP8swhbv6ntnuaWy6b9D/4Z5ai2+AqS3KXcR3B5C
@@ -74,8 +73,7 @@ puHB19a9N71siKJkSr47PebkYtaJr00I5XJHPTDMR044T4SxV7csNVC1KEbBuZODTyL8bC
 4PaZ6sFFOmz3Efv+e/meJ2sQ8Ggi1448IuIOcUnYm3F1ouCDrwnEVBxsQDnl3f41eHkNlu
 h2s016QKAC8J5rC26iDeWCBDUPPHuzEzkH03uH6pqEeqw/Nn7NT7ySeAdUUW8e9WvOvkEO
 ctJBCD0IatFz0AAAAVMTg3OTJAREVTS1RPUC1NRDYyTzZBAQIDBAUG
------END OPENSSH PRIVATE KEY-----
-"
+-----END OPENSSH PRIVATE KEY-----"
         username: "ubuntu"
         script: |
           pwd
